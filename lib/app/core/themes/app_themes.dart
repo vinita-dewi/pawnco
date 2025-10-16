@@ -6,18 +6,21 @@ import 'app_fonts.dart';
 class AppTheme {
   static ThemeData get light => ThemeData(
     brightness: Brightness.light,
+    useMaterial3: true,
     scaffoldBackgroundColor: AppColors.background,
     primaryColor: AppColors.primary,
     colorScheme: ColorScheme.light(
       primary: AppColors.primary,
       secondary: AppColors.secondary,
       error: AppColors.warning,
+      surfaceDim: AppColors.surfaceDim,
     ),
     textTheme: TextTheme(
       headlineLarge: AppFonts.headline,
       titleLarge: AppFonts.title,
       titleMedium: AppFonts.title2,
       bodyLarge: AppFonts.body,
+      labelLarge: AppFonts.description,
     ),
   );
 }

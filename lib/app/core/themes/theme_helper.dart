@@ -15,14 +15,15 @@ class _ColorHelper {
   Color get textPrimary => AppColors.textPrimary;
   Color get textSecondary => AppColors.textSecondary;
   Color get warning => AppColors.warning;
+  Color get surfaceDim => AppColors.surfaceDim;
 }
 
 class _FontHelper {
   TextStyle headline({Color? color, double? fontSize, FontWeight? weight}) =>
       AppFonts.headline.copyWith(
-        color: color ?? AppFonts.title.color,
-        fontSize: fontSize ?? AppFonts.title.fontSize,
-        fontWeight: weight ?? AppFonts.title.fontWeight,
+        color: color ?? AppFonts.headline.color,
+        fontSize: fontSize ?? AppFonts.headline.fontSize,
+        fontWeight: weight ?? AppFonts.headline.fontWeight,
       );
 
   TextStyle title({Color? color, double? fontSize, FontWeight? weight}) =>
@@ -34,15 +35,22 @@ class _FontHelper {
 
   TextStyle title2({Color? color, double? fontSize, FontWeight? weight}) =>
       AppFonts.title2.copyWith(
-        color: color ?? AppFonts.title.color,
-        fontSize: fontSize ?? AppFonts.title.fontSize,
-        fontWeight: weight ?? AppFonts.title.fontWeight,
+        color: color ?? AppFonts.title2.color,
+        fontSize: fontSize ?? AppFonts.title2.fontSize,
+        fontWeight: weight ?? AppFonts.title2.fontWeight,
       );
 
   TextStyle body({Color? color, double? fontSize, FontWeight? weight}) =>
       AppFonts.body.copyWith(
-        color: color ?? AppFonts.title.color,
-        fontSize: fontSize ?? AppFonts.title.fontSize,
-        fontWeight: weight ?? AppFonts.title.fontWeight,
+        color: color ?? AppFonts.body.color,
+        fontSize: fontSize ?? AppFonts.body.fontSize,
+        fontWeight: weight ?? AppFonts.body.fontWeight,
+      );
+
+  TextStyle description({Color? color, double? fontSize, FontWeight? weight}) =>
+      AppFonts.description.copyWith(
+        color: color ?? AppFonts.description.color,
+        fontSize: fontSize ?? AppFonts.description.fontSize,
+        fontWeight: weight ?? AppFonts.description.fontWeight,
       );
 }

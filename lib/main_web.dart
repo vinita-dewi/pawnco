@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pawnco/app/core/themes/app_themes.dart';
+import 'package:pawnco/app/presentation/web/home/bindings/home_binding.dart';
 
 import 'app/routes/app_pages.dart';
 
@@ -14,6 +15,7 @@ class MainWeb extends StatelessWidget {
       getPages: AppPages.routes,
       initialRoute: AppPages.INITIAL,
       debugShowCheckedModeBanner: false,
+      initialBinding: HomeBinding(),
     );
   }
 }
