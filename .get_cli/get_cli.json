@@ -1,0 +1,15 @@
+{
+  "get_cli": {
+    "project_name": "pawnco",
+    "output_folder": "lib/app",
+    "routes_path": "lib/app/routes/app_pages_web.dart",
+
+    "structure": "module",
+    "models_folder": "lib/app/data/models",
+    "repositories_folder": "lib/app/domain/repositories",
+    "providers_folder": "lib/app/data/sources",
+    "services_folder": "lib/app/core/utils",
+    "utils_folder": "lib/app/core/utils"
+
+  }
+}
