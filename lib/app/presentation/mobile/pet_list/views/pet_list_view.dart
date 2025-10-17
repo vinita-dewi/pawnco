@@ -6,13 +6,102 @@ import 'package:pawnco/app/core/utils/gap_helper.dart';
 import 'package:pawnco/app/domain/entities/pets.dart';
 import 'package:pawnco/app/presentation/enums/fetch_state.dart';
 import 'package:pawnco/app/presentation/widgets/appbar.dart';
+import 'package:pawnco/app/presentation/widgets/small_button.dart';
 import 'package:pawnco/app/presentation/widgets/tag_list.dart';
+import 'package:pawnco/app/presentation/widgets/tag_wrap.dart';
+import 'package:pawnco/app/routes/app_pages.dart';
 
 import '../../../../core/themes/theme_helper.dart';
 import '../controllers/pet_list_controller.dart';
 
 class PetListView extends GetView<PetListController> {
   const PetListView({super.key});
+
+  _showPetDetailBottomsheet(Pets pet) {
+    Get.bottomSheet(
+      Container(
+        padding: EdgeInsets.all(20),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.only(
+            topRight: Radius.circular(16),
+            topLeft: Radius.circular(16),
+          ),
+          color: AppThemeHelper.color.background,
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Align(
+              alignment: Alignment.topRight,
+              child: InkWell(
+                onTap: () {
+                  Get.back();
+                },
+                child: Icon(Icons.close, size: 24),
+              ),
+            ),
+            Gap.v20,
+            Container(
+              constraints: BoxConstraints(
+                maxHeight: MediaQuery.of(Get.context!).size.height * 0.2,
+              ),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(16),
+                color: AppThemeHelper.color.surfaceDim, // background color
+              ),
+              clipBehavior: Clip.antiAlias,
+              child: SizedBox.expand(
+                child: CachedNetworkImage(
+                  imageUrl:
+                      (pet.photos ?? []).isEmpty ? '' : pet.photos?.first ?? '',
+                  fit: BoxFit.cover,
+                  placeholder:
+                      (_, __) => const SizedBox.expand(
+                        child: Center(child: CircularProgressIndicator()),
+                      ),
+                  errorWidget:
+                      (_, __, ___) => SizedBox.expand(
+                        child: Center(
+                          child: Image.asset(AssetsPath.empty, height: 50),
+                        ),
+                      ),
+                ),
+              ),
+            ),
+            Gap.v16,
+            Text(
+              pet.name!,
+              style: AppThemeHelper.font.title2(),
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+            ),
+            Gap.v12,
+            Text(
+              pet.category!.name!,
+              style: AppThemeHelper.font.body(
+                color: AppThemeHelper.color.surfaceDim,
+              ),
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+            ),
+            Gap.v12,
+            TagWrap(tags: pet.tags ?? []),
+            Gap.v20,
+            SmallButton.primary(
+              label: 'Adopt',
+              color: AppThemeHelper.color.primary,
+              onTap: () {
+                Get.back();
+                Get.toNamed(Routes.ORDER, arguments: {'pets': pet});
+              },
+            ),
+          ],
+        ),
+      ),
+      isScrollControlled: true,
+    );
+  }
 
   Widget _buildPetGridView() {
     return Padding(
@@ -28,7 +117,9 @@ class PetListView extends GetView<PetListController> {
         itemBuilder: (context, idx) {
           Pets pet = controller.pets[idx];
           return InkWell(
-            onTap: () {},
+            onTap: () {
+              _showPetDetailBottomsheet(pet);
+            },
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -129,32 +220,32 @@ class PetListView extends GetView<PetListController> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            PawAppBar(),
-            Gap.v20,
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Text(
-                'Available for Adoption',
-                style: AppThemeHelper.font.title(),
-              ),
+    return Scaffold(
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Gap.v20,
+          PawAppBar(),
+          Gap.v20,
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Text(
+              'Available for Adoption',
+              style: AppThemeHelper.font.title(),
             ),
-            Gap.v20,
-            TagList(),
-            Expanded(
-              child: Obx(
-                () =>
-                    controller.fetchState == FetchState.loading
-                        ? Center(child: CircularProgressIndicator())
-                        : _buildPetGridView(),
-              ),
+          ),
+          Gap.v20,
+          TagList(),
+          Expanded(
+            child: Obx(
+              () =>
+                  controller.fetchState == FetchState.loading ||
+                          controller.fetchState == FetchState.fetching
+                      ? Center(child: CircularProgressIndicator())
+                      : _buildPetGridView(),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

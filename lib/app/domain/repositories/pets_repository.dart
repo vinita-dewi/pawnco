@@ -1,3 +1,4 @@
+import 'package:pawnco/app/domain/entities/order.dart';
 import 'package:pawnco/app/domain/entities/pets.dart';
 
 abstract class PetRepository {
@@ -12,4 +13,6 @@ abstract class PetRepository {
   Future deletePet(String id);
 
   Future<List<Pets>> getPetsByTag(List<String> tags);
+
+  Future<Order> postPetOrder(Map<String, dynamic> json);
 }

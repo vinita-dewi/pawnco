@@ -3,4 +3,6 @@ class ApiPath {
   static const petByStatus = '/pet/findByStatus';
   static const petByTags = '/pet/findByTags';
   static const petDetail = '/pet/{id}';
+
+  static const orderPet = '/store/order';
 }

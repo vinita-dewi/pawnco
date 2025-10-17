@@ -39,7 +39,7 @@ class TagList extends GetView<PetListController> {
   Widget build(BuildContext context) {
     return Container(
       height: 30,
-      padding: EdgeInsets.symmetric(horizontal: 20),
+      padding: EdgeInsets.only(left: 20),
       child: Obx(() {
         return controller.fetchState == FetchState.loading
             ? SizedBox()

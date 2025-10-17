@@ -13,13 +13,14 @@ class PetListController extends GetxController {
   final GetPetDetailUsecase getPetDetailUseCase;
 
   final GetPetByTagUseCase getPetByTagUseCase;
+
   PetListController(
     this.getPetsUseCase,
     this.getPetDetailUseCase,
     this.getPetByTagUseCase,
   );
 
-  final Rx<FetchState> _fetchState = FetchState.none.obs;
+  final Rx<FetchState> _fetchState = FetchState.loading.obs;
   FetchState get fetchState => _fetchState.value;
 
   var logger = Logger();
@@ -37,27 +38,27 @@ class PetListController extends GetxController {
   void onReady() {
     super.onReady();
     logger.d('LOAD PETS!!');
-    loadPets();
+    init();
   }
 
+  void init() async {
+    await loadPets();
+    initTags();
+  }
   Future<void> loadPets() async {
     try {
-      _fetchState.value = FetchState.loading;
-      _tags.value = [];
+      _fetchState.value = FetchState.fetching;
+
 
       _pets.value = await getPetsUseCase();
 
       logger.d('result get pet : ${_pets.value}');
 
-      for (var pet in _pets) {
-        if ((pet.tags ?? []).isNotEmpty) {
-          tags.addAll(pet.tags!);
-        }
-      }
+
+
+
 
       logger.d('tags : $_tags');
-
-      _fetchState.value = FetchState.none;
     } catch (e, s) {
       logger.e('stack get pet : $e');
     } finally {
@@ -65,9 +66,18 @@ class PetListController extends GetxController {
     }
   }
 
+  void initTags() {
+    _tags.value = [];
+    for (var pet in _pets) {
+      if ((pet.tags ?? []).isNotEmpty) {
+        tags.addAll(pet.tags!);
+      }
+    }
+  }
+
   Future<void> loadPetsByTag() async {
     try {
-      _fetchState.value = FetchState.loading;
+      _fetchState.value = FetchState.fetching;
 
       _pets.value = await getPetByTagUseCase(_selectedTags);
 

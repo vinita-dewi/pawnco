@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:pawnco/app/core/constants/api_path.dart';
 import 'package:pawnco/app/core/network/dio_client.dart';
+import 'package:pawnco/app/data/models/order_model.dart';
 import 'package:pawnco/app/data/models/pet_model.dart';
 
 class PetsRemoteSource {
@@ -47,5 +48,11 @@ class PetsRemoteSource {
         headers: {'Accept': 'text/plain, */*'},
       ),
     );
+  }
+
+  Future<OrderModel> postPetOrder(Map<String, dynamic> json) async {
+    final res = await client.post(ApiPath.orderPet, data: json);
+
+    return OrderModel.fromJson(res.data);
   }
 }

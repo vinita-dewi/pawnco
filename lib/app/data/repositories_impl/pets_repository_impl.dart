@@ -1,4 +1,5 @@
 import 'package:pawnco/app/data/sources/pets_remote_source.dart';
+import 'package:pawnco/app/domain/entities/order.dart';
 import 'package:pawnco/app/domain/entities/pets.dart';
 import 'package:pawnco/app/domain/repositories/pets_repository.dart';
 
@@ -13,6 +14,7 @@ class PetsRepositoryImpl extends PetRepository {
     return model.map((m) => m.toEntity()).toList();
   }
 
+  @override
   Future<List<Pets>> getPetsByTag(List<String> tags) async {
     final model = await remoteSource.fetchPetsByTag(tags);
     return model.map((m) => m.toEntity()).toList();
@@ -39,5 +41,11 @@ class PetsRepositoryImpl extends PetRepository {
   @override
   Future<void> deletePet(String id) async {
     await remoteSource.deletePet(id);
+  }
+
+  @override
+  Future<Order> postPetOrder(Map<String, dynamic> json) async {
+    final model = await remoteSource.postPetOrder(json);
+    return model.toEntity();
   }
 }
