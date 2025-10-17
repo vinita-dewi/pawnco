@@ -26,11 +26,8 @@ class PetsRemoteSource {
     return PetModel.fromJson(res.data);
   }
 
-  Future<PetModel> putPet(Map<String, dynamic> json, int id) async {
-    final res = await client.put(
-      ApiPath.petDetail.replaceAll('{id}', id.toString()),
-      data: json,
-    );
+  Future<PetModel> putPet(Map<String, dynamic> json) async {
+    final res = await client.put(ApiPath.pet, data: json);
 
     return PetModel.fromJson(res.data);
   }

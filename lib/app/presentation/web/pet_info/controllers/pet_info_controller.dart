@@ -32,8 +32,11 @@ class PetInfoController extends GetxController {
   final TextEditingController name = TextEditingController();
   final TextEditingController category = TextEditingController();
   final TextEditingController tags = TextEditingController();
+  final TextEditingController photoCtrl = TextEditingController();
   final RxString _photos = ''.obs;
   String get photos => _photos.value;
+
+  String? petId;
 
   set photos(String val) => _photos.value = val;
 
@@ -41,12 +44,16 @@ class PetInfoController extends GetxController {
 
   final logger = Logger();
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
     _isEdit.value = Get.arguments != null;
-    if (Get.arguments != null) {
-      String id = Get.arguments;
-      loadPetDetail(id);
+    if (Get.parameters['id'] != null) {
+      petId = Get.parameters['id'];
+      await loadPetDetail(petId!);
+      if (pet == null) {
+        Pets? args = Get.arguments['pet'];
+        _pet.value = args;
+      }
       fillTextController();
     }
   }
@@ -54,8 +61,12 @@ class PetInfoController extends GetxController {
   fillTextController() {
     name.text = pet?.name ?? '';
     category.text = pet?.category?.name ?? '';
-    tags.text = (pet?.tags ?? []).join(',');
+    tags.text = (pet?.tags ?? []).map((e) => e.name).toList().join(',');
     _photos.value = (pet?.photos ?? []).isEmpty ? '' : pet?.photos?.first ?? '';
+    photoCtrl.text = _photos.value;
+    logger.i(
+      'name : ${name.text}, category: ${category.text}, tags: ${tags.text}, photos: ${_photos.value}',
+    );
   }
 
   Future<void> loadPetDetail(String id) async {
@@ -89,7 +100,32 @@ class PetInfoController extends GetxController {
         'photoUrls': [photos],
         'status': 'available',
       };
-      _pet.value = await addPetUsecase(json);
+      _pet.value = await editPetUsecase(json);
+    } catch (e) {
+      logger.e('error add pet : $e');
+    } finally {
+      _fetchState.value = FetchState.none;
+    }
+  }
+
+  Future<void> editPet() async {
+    try {
+      _fetchState.value = FetchState.fetching;
+      Random random = Random();
+
+      var json = {
+        'id': petId!,
+        'name': name.text,
+        'category': {'id': random.nextInt(100), 'name': category.text},
+        'tags':
+            tags.text
+                .split(',')
+                .map((e) => {'id': random.nextInt(100), 'name': e})
+                .toList(),
+        'photoUrls': [photos],
+        'status': 'available',
+      };
+      _pet.value = await editPetUsecase(json);
     } catch (e) {
       logger.e('error add pet : $e');
     } finally {

@@ -7,7 +7,7 @@ abstract class PetRepository {
 
   Future<Pets> addPet(Map<String, dynamic> json);
 
-  Future<Pets> editPet(Map<String, dynamic> json, int id);
+  Future<Pets> editPet(Map<String, dynamic> json);
 
   Future deletePet(String id);
 }

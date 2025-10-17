@@ -6,6 +6,5 @@ class EditPetUsecase {
 
   EditPetUsecase(this.repo);
 
-  Future<Pets> call(Map<String, dynamic> json, int id) =>
-      repo.editPet(json, id);
+  Future<Pets> call(Map<String, dynamic> json) => repo.editPet(json);
 }

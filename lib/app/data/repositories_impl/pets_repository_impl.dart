@@ -26,8 +26,8 @@ class PetsRepositoryImpl extends PetRepository {
   }
 
   @override
-  Future<Pets> editPet(Map<String, dynamic> json, int id) async {
-    final model = await remoteSource.putPet(json, id);
+  Future<Pets> editPet(Map<String, dynamic> json) async {
+    final model = await remoteSource.putPet(json);
     return model.toEntity();
   }
 

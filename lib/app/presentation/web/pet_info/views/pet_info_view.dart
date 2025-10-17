@@ -38,141 +38,155 @@ class PetInfoView extends GetView<PetInfoController> {
                         ),
                       ),
                       padding: EdgeInsets.all(40),
-                      child: Form(
-                        key: controller.key,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                InkWell(
-                                  onTap: () {
-                                    Get.back();
-                                  },
-                                  child: Icon(
-                                    Icons.arrow_back,
-                                    color: AppThemeHelper.color.textPrimary,
-                                    size: 30,
+                      child: Obx(() {
+                        if (controller.fetchState == FetchState.loading) {
+                          return Center(child: CircularProgressIndicator());
+                        }
+                        return Form(
+                          key: controller.key,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  InkWell(
+                                    onTap: () {
+                                      Get.back();
+                                    },
+                                    child: Icon(
+                                      Icons.arrow_back,
+                                      color: AppThemeHelper.color.textPrimary,
+                                      size: 30,
+                                    ),
                                   ),
-                                ),
-                                Obx(() {
-                                  return Column(
-                                    children: [
-                                      Text(
-                                        controller.isEdit
-                                            ? 'Edit Pet'
-                                            : 'Add New Pet',
-                                        style: AppThemeHelper.font.title(),
-                                        textAlign: TextAlign.center,
-                                      ),
-                                      Gap.v8,
-                                      Text(
-                                        controller.isEdit
-                                            ? 'Update the details for your beloved pet.'
-                                            : 'Enter the details for your new furry, scaly, or feathered friend!',
-                                        style: AppThemeHelper.font.description(
-                                          color:
-                                              AppThemeHelper.color.surfaceDim,
+                                  Obx(() {
+                                    return Column(
+                                      children: [
+                                        Text(
+                                          controller.isEdit
+                                              ? 'Edit Pet'
+                                              : 'Add New Pet',
+                                          style: AppThemeHelper.font.title(),
+                                          textAlign: TextAlign.center,
                                         ),
-                                      ),
-                                    ],
-                                  );
-                                }),
-                                SizedBox(),
-                              ],
-                            ),
-                            Gap.h(40),
-                            Textfield(
-                              title: 'Pet Name',
-                              controller: controller.name,
-                              validators: (val) {
-                                if (val.isEmpty) {
-                                  return 'Pet Name is Required!';
-                                }
-                              },
-                            ),
-                            Gap.v20,
-                            Textfield(
-                              title: 'Category',
-                              controller: controller.category,
-                              validators: (val) {
-                                if (val.isEmpty) {
-                                  return 'Category is Required!';
-                                }
-                              },
-                            ),
-                            Gap.v20,
-                            Textfield(
-                              title: 'Tags',
-                              controller: controller.tags,
-                            ),
-                            Gap.v20,
-                            Textfield(
-                              title: 'Photo Urls',
-                              onChanged: (val) {
-                                controller.photos = val;
-                                debugPrint('photos : ${controller.photos}');
-                              },
-                            ),
-                            Gap.v20,
-                            Text(
-                              'Photo Preview',
-                              style: AppThemeHelper.font.title2(),
-                            ),
-                            Gap.v10,
-                            Expanded(
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(16),
-                                  color:
-                                      AppThemeHelper
-                                          .color
-                                          .surfaceDim, // background color
-                                ),
-                                clipBehavior:
-                                    Clip.antiAlias, // keeps the rounded corners
-                                child: Obx(
-                                  () => SizedBox.expand(
-                                    child: CachedNetworkImage(
-                                      imageUrl: controller.photos,
-                                      fit: BoxFit.cover,
-                                      placeholder:
-                                          (_, __) => const SizedBox.expand(
-                                            child: Center(
-                                              child:
-                                                  CircularProgressIndicator(),
-                                            ),
-                                          ),
-                                      errorWidget:
-                                          (_, __, ___) => SizedBox.expand(
-                                            child: Center(
-                                              child: Image.asset(
-                                                AssetsPath.empty,
-                                                height: 50,
+                                        Gap.v8,
+                                        Text(
+                                          controller.isEdit
+                                              ? 'Update the details for your beloved pet.'
+                                              : 'Enter the details for your new furry, scaly, or feathered friend!',
+                                          style: AppThemeHelper.font
+                                              .description(
+                                                color:
+                                                    AppThemeHelper
+                                                        .color
+                                                        .surfaceDim,
+                                              ),
+                                        ),
+                                      ],
+                                    );
+                                  }),
+                                  SizedBox(),
+                                ],
+                              ),
+                              Gap.h(40),
+                              Textfield(
+                                title: 'Pet Name',
+                                controller: controller.name,
+                                validators: (val) {
+                                  if (val.isEmpty) {
+                                    return 'Pet Name is Required!';
+                                  }
+                                },
+                              ),
+                              Gap.v20,
+                              Textfield(
+                                title: 'Category',
+                                controller: controller.category,
+                                validators: (val) {
+                                  if (val.isEmpty) {
+                                    return 'Category is Required!';
+                                  }
+                                },
+                              ),
+                              Gap.v20,
+                              Textfield(
+                                title: 'Tags',
+                                controller: controller.tags,
+                              ),
+                              Gap.v20,
+                              Textfield(
+                                title: 'Photo Urls',
+                                controller: controller.photoCtrl,
+                                onChanged: (val) {
+                                  controller.photos = val;
+                                  debugPrint('photos : ${controller.photos}');
+                                },
+                              ),
+                              Gap.v20,
+                              Text(
+                                'Photo Preview',
+                                style: AppThemeHelper.font.title2(),
+                              ),
+                              Gap.v10,
+                              Expanded(
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(16),
+                                    color:
+                                        AppThemeHelper
+                                            .color
+                                            .surfaceDim, // background color
+                                  ),
+                                  clipBehavior:
+                                      Clip.antiAlias, // keeps the rounded corners
+                                  child: Obx(
+                                    () => SizedBox.expand(
+                                      child: CachedNetworkImage(
+                                        imageUrl: controller.photos,
+                                        fit: BoxFit.cover,
+                                        placeholder:
+                                            (_, __) => const SizedBox.expand(
+                                              child: Center(
+                                                child:
+                                                    CircularProgressIndicator(),
                                               ),
                                             ),
-                                          ),
+                                        errorWidget:
+                                            (_, __, ___) => SizedBox.expand(
+                                              child: Center(
+                                                child: Image.asset(
+                                                  AssetsPath.empty,
+                                                  height: 50,
+                                                ),
+                                              ),
+                                            ),
+                                      ),
                                     ),
                                   ),
                                 ),
                               ),
-                            ),
-                            Gap.v20,
-                            SmallButton.primary(
-                              label: 'Save',
-                              color: AppThemeHelper.color.primary,
-                              onTap: () async {
-                                if (controller.key.currentState!.validate()) {
-                                  await controller.addPet();
-                                  Get.back(result: true);
-                                }
-                              },
-                            ),
-                          ],
-                        ),
-                      ),
+                              Gap.v20,
+                              SmallButton.primary(
+                                label: 'Save',
+                                color: AppThemeHelper.color.primary,
+                                onTap: () async {
+                                  if (controller.key.currentState!.validate()) {
+                                    if (controller.isEdit) {
+                                      await controller.editPet();
+                                    } else {
+                                      await controller.addPet();
+                                    }
+                                    Get.back(result: true);
+                                  }
+                                },
+                              ),
+                            ],
+                          ),
+                        );
+                      }),
                     ),
                   ),
                 ),
