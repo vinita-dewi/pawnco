@@ -13,6 +13,11 @@ class PetsRepositoryImpl extends PetRepository {
     return model.map((m) => m.toEntity()).toList();
   }
 
+  Future<List<Pets>> getPetsByTag(List<String> tags) async {
+    final model = await remoteSource.fetchPetsByTag(tags);
+    return model.map((m) => m.toEntity()).toList();
+  }
+
   @override
   Future<Pets> getPetDetail(String id) async {
     final model = await remoteSource.fetchPetDetail(id);

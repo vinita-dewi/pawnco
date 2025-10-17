@@ -9,7 +9,7 @@ import 'package:pawnco/app/presentation/enums/fetch_state.dart';
 import 'package:pawnco/app/presentation/widgets/appbar.dart';
 import 'package:pawnco/app/presentation/widgets/loading_overlay.dart';
 import 'package:pawnco/app/presentation/widgets/small_button.dart';
-import 'package:pawnco/app/presentation/widgets/tag_list.dart';
+import 'package:pawnco/app/presentation/widgets/tag_wrap.dart';
 import 'package:pawnco/app/routes/app_pages.dart';
 
 import '../controllers/home_controller.dart';
@@ -152,7 +152,7 @@ class HomeView extends GetView<HomeController> {
                   style: AppThemeHelper.font.body(),
                 ),
                 Gap.v10,
-                TagList(tags: pet.tags ?? []),
+                TagWrap(tags: pet.tags ?? []),
                 Gap.h(50),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,

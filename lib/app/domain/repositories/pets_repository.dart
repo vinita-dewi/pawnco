@@ -10,4 +10,6 @@ abstract class PetRepository {
   Future<Pets> editPet(Map<String, dynamic> json);
 
   Future deletePet(String id);
+
+  Future<List<Pets>> getPetsByTag(List<String> tags);
 }

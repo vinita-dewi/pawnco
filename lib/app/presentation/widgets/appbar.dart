@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pawnco/app/core/constants/assets_path.dart';
@@ -40,14 +41,15 @@ class PawAppBar extends StatelessWidget {
               ],
             ),
           ),
-          SmallButton.primary(
-            label: 'New Pet',
-            color: AppThemeHelper.color.primary,
-            onTap: () {
-              Get.toNamed(Routes.PET_INFO);
-            },
-            icon: Icons.add_circle_outline,
-          ),
+          if (kIsWeb)
+            SmallButton.primary(
+              label: 'New Pet',
+              color: AppThemeHelper.color.primary,
+              onTap: () {
+                Get.toNamed(Routes.PET_INFO);
+              },
+              icon: Icons.add_circle_outline,
+            ),
         ],
       ),
     );

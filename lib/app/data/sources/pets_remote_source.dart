@@ -13,6 +13,13 @@ class PetsRemoteSource {
     return data.map((e) => PetModel.fromJson(e)).toList();
   }
 
+  Future<List<PetModel>> fetchPetsByTag(List<String> tags) async {
+    var query = {'tags': tags};
+    final res = await client.get(ApiPath.petByTags, query: query);
+    final List data = res.data as List;
+    return data.map((e) => PetModel.fromJson(e)).toList();
+  }
+
   Future<PetModel> fetchPetDetail(String id) async {
     final res = await client.get(
       ApiPath.petDetail.replaceAll('{id}', id.toString()),
