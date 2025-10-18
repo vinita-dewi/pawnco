@@ -2,6 +2,13 @@
 
 Flutter mobile & web sample app that consumes the **Swagger Petstore v3 API** to browse pets, view details, and place orders — structured with a clean **data / domain / presentation** architecture and **GetX** for routing & DI.
 
+> This repo contains **two apps** in one codebase:
+> - **Web Backoffice** — backoffice dashboard for **CRUD** of pets.
+> - **Mobile App** — customer-facing app for **listing** pets and **ordering**.
+
+[**▶ Live Demo (Web Backoffice → Pet Info #2)**](https://vinita-dewi.github.io/pawnco/#/pet-info?id=2)
+
+
 ![Flutter](https://img.shields.io/badge/Flutter-mobile%20%26%20web-blue)
 ![State](https://img.shields.io/badge/state-GetX-informational)
 ![HTTP](https://img.shields.io/badge/http-dio-green)
