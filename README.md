@@ -6,7 +6,7 @@ Flutter mobile & web sample app that consumes the **Swagger Petstore v3 API** to
 > - **Web Backoffice** — backoffice dashboard for **CRUD** of pets.
 > - **Mobile App** — customer-facing app for **listing** pets and **ordering**.
 
-[**▶ Live Demo (Web Backoffice → Pet Info #2)**](https://vinita-dewi.github.io/pawnco/#/pet-info?id=2)
+[**▶ Live Demo (Web Backoffice → Pet Info #2)**](https://vinita-dewi.github.io/pawnco)
 
 
 ![Flutter](https://img.shields.io/badge/Flutter-mobile%20%26%20web-blue)
