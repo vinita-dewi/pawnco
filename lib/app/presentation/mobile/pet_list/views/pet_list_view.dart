@@ -78,7 +78,7 @@ class PetListView extends GetView<PetListController> {
             ),
             Gap.v12,
             Text(
-              pet.category!.name!,
+              pet.category?.name ?? '',
               style: AppThemeHelper.font.body(
                 color: AppThemeHelper.color.surfaceDim,
               ),
