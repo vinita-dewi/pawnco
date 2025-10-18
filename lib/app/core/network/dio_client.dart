@@ -1,9 +1,13 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 
 class DioClient {
   final Dio _dio;
 
   DioClient._internal(this._dio);
+
+  @visibleForTesting
+  DioClient.from(this._dio);
   factory DioClient.create() {
     final dio = Dio(
       BaseOptions(
@@ -27,7 +31,6 @@ class DioClient {
     return _dio.get(path, queryParameters: query, options: options);
   }
 
-  /// Wrapper for POST requests with body and query parameters
   Future<Response> post(
     String path, {
     Map<String, dynamic>? data,
@@ -42,7 +45,6 @@ class DioClient {
     );
   }
 
-  /// Optional wrappers for PUT, DELETE, etc.
   Future<Response> put(
     String path, {
     Map<String, dynamic>? data,

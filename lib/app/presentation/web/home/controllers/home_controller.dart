@@ -23,7 +23,11 @@ class HomeController extends GetxController {
   void onReady() {
     super.onReady();
     logger.d('LOAD PETS!!');
-    loadPets();
+    init();
+  }
+
+  Future<void> init() async {
+    await loadPets();
   }
 
   Future<void> loadPets() async {

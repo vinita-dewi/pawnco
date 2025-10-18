@@ -41,22 +41,18 @@ class PetListController extends GetxController {
     init();
   }
 
-  void init() async {
+  Future<void> init() async {
     await loadPets();
     initTags();
   }
+
   Future<void> loadPets() async {
     try {
       _fetchState.value = FetchState.fetching;
 
-
       _pets.value = await getPetsUseCase();
 
       logger.d('result get pet : ${_pets.value}');
-
-
-
-
 
       logger.d('tags : $_tags');
     } catch (e, s) {

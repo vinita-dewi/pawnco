@@ -29,6 +29,8 @@ class PetInfoController extends GetxController {
   final Rxn<Pets> _pet = Rxn<Pets>();
   Pets? get pet => _pet.value;
 
+  set pet(Pets? x) => _pet.value = x;
+
   final TextEditingController name = TextEditingController();
   final TextEditingController category = TextEditingController();
   final TextEditingController tags = TextEditingController();
@@ -46,6 +48,10 @@ class PetInfoController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
+    init();
+  }
+
+  Future<void> init() async {
     _isEdit.value = Get.arguments != null;
     if (Get.parameters['id'] != null) {
       petId = Get.parameters['id'];

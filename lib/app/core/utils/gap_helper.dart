@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 
 class Gap {
-  // SizedBox factories
   static SizedBox h(double value) => SizedBox(height: value);
   static SizedBox w(double value) => SizedBox(width: value);
 
-  // Predefined gaps for convenience
   static SizedBox get v4 => h(4);
   static SizedBox get v8 => h(8);
   static SizedBox get v10 => h(10);

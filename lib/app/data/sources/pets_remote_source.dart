@@ -44,7 +44,7 @@ class PetsRemoteSource {
     await client.delete(
       ApiPath.petDetail.replaceAll('{id}', id.toString()),
       options: Options(
-        responseType: ResponseType.plain, // <- don't JSON-decode
+        responseType: ResponseType.plain,
         headers: {'Accept': 'text/plain, */*'},
       ),
     );
